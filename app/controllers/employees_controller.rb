@@ -1,10 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :get_employee, only: [:edit, :update, :destroy]
 
-  def get_employee
-    @employee = Employee.find(params[:id])
-  end
-
   def new
     @employee = Employee.new
     @employee.addresses.build
@@ -43,7 +39,7 @@ class EmployeesController < ApplicationController
 
   def search
     if params[:commit] == "Search"
-      @employees = Employee.where(employee_name: params[:employee_name])
+      @employees = Employee.where(employee_name: params[:employee_name].strip)
     else
       @employees = Employee.all
     end
@@ -52,11 +48,8 @@ class EmployeesController < ApplicationController
 
   private
 
-  def upload
-    uploaded_file = params[:picture]
-    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
-      file.write(uploaded_file.read)
-    end
+  def get_employee
+    @employee = Employee.find(params[:id])
   end
 
   def employee_params
