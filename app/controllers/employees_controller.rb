@@ -1,6 +1,10 @@
 class EmployeesController < ApplicationController
   before_action :get_employee, only: [:edit, :update, :destroy]
 
+  def index
+    @employees = Employee.includes(:addresses).all
+  end
+
   def new
     @employee = Employee.new
     @employee.addresses.build
@@ -16,12 +20,7 @@ class EmployeesController < ApplicationController
     end
   end
 
-  def index
-    @employees = Employee.includes(:addresses).all
-  end
-
-  def edit
-  end
+  def edit; end
 
   def update
     if @employee.update(employee_params)
@@ -33,8 +32,11 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
-    @employee.destroy
-    redirect_to employees_path
+    if @employee.destroy
+      redirect_to employees_path, status: :see_other, notice: "you have successfully deleted the employee"
+    else
+      redirect_to employees_path, status: :unprocessable_entity, alert: "The delete action didn't work.."
+    end
   end
 
   def search
