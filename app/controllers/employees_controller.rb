@@ -14,7 +14,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
     if @employee.save
       @employee.update(hobbies: [["music", params[:hobbies][:music]], ["writing", params[:hobbies][:writing]], ["singing", params[:hobbies][:singing]]])
-      redirect_to employees_path
+      redirect_to employees_path, notice: "you have successfully created an employee"
     else
       render :new, status: :unprocessable_entity
     end
