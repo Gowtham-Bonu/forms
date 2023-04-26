@@ -12,8 +12,8 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
+    @employee.hobby_id = params[:employee][:hobby_id].drop(1)
     if @employee.save
-      @employee.update(hobbies: [["music", params[:hobbies][:music]], ["writing", params[:hobbies][:writing]], ["singing", params[:hobbies][:singing]]])
       redirect_to employees_path, notice: "you have successfully created an employee"
     else
       render :new, status: :unprocessable_entity
@@ -24,7 +24,7 @@ class EmployeesController < ApplicationController
 
   def update
     if @employee.update(employee_params)
-      @employee.update(hobbies: [["music", params[:hobbies][:music]], ["writing", params[:hobbies][:writing]], ["singing", params[:hobbies][:singing]]])
+      @employee.update(hobby_id:  params[:employee][:hobby_id].drop(1))
       redirect_to employees_path
     else
       render :edit, status: :unprocessable_entity
@@ -55,6 +55,6 @@ class EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :hobbies, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road])
+    params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road])
   end
 end

@@ -38,17 +38,9 @@
           <div><%= message %></div>
         <% end %>
      </div>
-     <div class="mb-3" >
-      Hobbies:
-        <%= check_box("hobbies", "music") %>
-        <%= form.label :hobbies_music, {class: "form-label"} %><br>
-        <%= check_box("hobbies", "writing") %>
-        <%= form.label :hobbies_writing, {class: "form-label"} %><br>
-        <%= check_box("hobbies", "singing") %>
-        <%= form.label :hobbies_singing, {class: "form-label"} %><br>
-        <% @employee.errors.full_messages_for(:birth_date).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
+      <div>
+        Hobbies:<br>
+        <%= form.collection_check_boxes :hobby_id, Hobby.order(:name), :id, :name %>
      </div>
      <div class="mb-3" >
         <%= form.label :mobile_number, {class: "form-label"} %><br>

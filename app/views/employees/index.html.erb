@@ -21,10 +21,8 @@
       <td><%= employee.gender %></td>
       <td>
         <ul>
-          <% employee.hobbies.each do |hobby| %>
-            <% if hobby[-1]=="1" %>
-              <li><%= hobby[0] %></li>
-            <% end %>
+          <% employee.hobby_id.each do |id| %>
+            <li><%= Hobby.find(id.to_i).name %></li>
           <% end %>
         </ul>
       </td>
