@@ -1,4 +1,4 @@
-<%= render "search" %>
+<div><%= render "search" %></div>
 <div class="later" ><%= link_to "create a new employee", new_employee_path %></div>
 <table class="table table-dark table-striped">
   <tr>
@@ -21,21 +21,21 @@
       <td><%= employee.gender %></td>
       <td>
         <ul>
-          <% employee.hobby_id.each do |id| %>
+          <% employee.hobbies.each do |id| %>
             <li><%= Hobby.find(id.to_i).name %></li>
           <% end %>
         </ul>
       </td>
       <td>
         <p>house name: <%= employee.addresses.first.house_name %></p>
-        <p>house name: <%= employee.addresses.first.street_name %></p>
-        <p>house name: <%= employee.addresses.first.road %></p>
+        <p>street name: <%= employee.addresses.first.street_name %></p>
+        <p>road name: <%= employee.addresses.first.road %></p>
       </td>
       <td><%= employee.mobile_number %></td>
       <td><%= employee.birth_date %></td>
       <td><%= image_tag(employee.document.url, alt: 'Image', class:"handle" ) if employee.document? %></td>
-      <td><button class="delete  btn btn-dark"><%= link_to "Edit", edit_employee_path(employee) %></button></td>
-      <td><button class="delete  btn btn-light"><%= link_to "Destroy", employee_path(employee), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></button></td>
+      <td><button class="btn btn-dark"><%= link_to "Edit", edit_employee_path(employee) %></button></td>
+      <td><button class="btn btn-light"><%= link_to "Destroy", employee_path(employee), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></button></td>
     </tr>
   <% end %>
 </table>

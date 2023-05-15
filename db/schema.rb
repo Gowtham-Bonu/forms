@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_054345) do
     t.string "email"
     t.string "password"
     t.string "gender"
-    t.string "hobby_id", default: [], array: true
+    t.string "hobbies", default: [], array: true
     t.string "address"
     t.string "mobile_number"
     t.date "birth_date"
