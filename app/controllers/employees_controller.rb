@@ -15,7 +15,7 @@ class EmployeesController < ApplicationController
     if @employee.save
       redirect_to employees_path, notice: "you have successfully created an employee"
     else
-      flash.now[:alert] = "Employee's not created!"
+      flash.now[:alert] = [@employee.errors.full_messages].join(", ")
       render :new, status: :unprocessable_entity
     end
   end
@@ -26,7 +26,7 @@ class EmployeesController < ApplicationController
     if @employee.update(employee_params)
       redirect_to employees_path, notice: "you have successfully updated the employee"
     else
-      flash.now[:alert] = "Employee's not updated!"
+      flash.now[:alert] = [@employee.errors.full_messages].join(", ")
       render :edit, status: :unprocessable_entity
     end
   end
@@ -35,7 +35,7 @@ class EmployeesController < ApplicationController
     if @employee.destroy
       flash[:notice] = "you have successfully deleted the employee"
     else
-      flash[:alert] = "employee's not deleted"
+      flash[:alert] = [@employee.errors.full_messages].join(", ")
     end
     redirect_to employees_path
   end
