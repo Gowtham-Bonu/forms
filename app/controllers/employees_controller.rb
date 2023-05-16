@@ -12,7 +12,6 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
-    @employee.hobbies = params[:employee][:hobbies].drop(1)
     if @employee.save
       redirect_to employees_path, notice: "you have successfully created an employee"
     else
@@ -25,7 +24,6 @@ class EmployeesController < ApplicationController
 
   def update
     if @employee.update(employee_params)
-      @employee.update(hobby_id:  params[:employee][:hobby_id].drop(1))
       redirect_to employees_path, notice: "you have successfully updated the employee"
     else
       flash.now[:alert] = "Employee's not updated!"
@@ -54,6 +52,6 @@ class EmployeesController < ApplicationController
     end
 
     def employee_params
-      params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road])
+      params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road], hobbies: [])
     end
 end

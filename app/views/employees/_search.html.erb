@@ -2,7 +2,7 @@
   <div class="card-body">
     <%= form_with url: search_employees_path, method: :get do |form| %>
       <div class="mb-3">
-        <%= form.label :employee_name, {class: "form-label"}  %>
+        <%= form.label :employee_name,"search for:", {class: "form-label"}  %>
         <%= form.search_field :employee_name, {class: "form-control", placeholder: "search by employee name"} %>
       </div>
       <div>

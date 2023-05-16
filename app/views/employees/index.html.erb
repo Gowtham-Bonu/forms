@@ -21,8 +21,8 @@
       <td><%= employee.gender %></td>
       <td>
         <ul>
-          <% employee.hobbies.each do |id| %>
-            <li><%= Hobby.find(id.to_i).name %></li>
+          <% Hobby.find(employee.hobbies.slice(1..)).pluck(:name).each do |hobby| %>
+            <li><%= hobby %></li>
           <% end %>
         </ul>
       </td>
@@ -34,8 +34,8 @@
       <td><%= employee.mobile_number %></td>
       <td><%= employee.birth_date %></td>
       <td><%= image_tag(employee.document.url, alt: 'Image', class:"handle" ) if employee.document? %></td>
-      <td><button class="btn btn-dark"><%= link_to "Edit", edit_employee_path(employee) %></button></td>
-      <td><button class="btn btn-light"><%= link_to "Destroy", employee_path(employee), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></button></td>
+      <td><%= link_to "Edit", edit_employee_path(employee), class: 'btn btn-light' %></td>
+      <td><%= link_to "Destroy", employee_path(employee), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'btn btn-dark' %></td>
     </tr>
   <% end %>
 </table>
