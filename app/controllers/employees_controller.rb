@@ -13,9 +13,9 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
-      @employee.update(hobbies: [["music", params[:hobbies][:music]], ["writing", params[:hobbies][:writing]], ["singing", params[:hobbies][:singing]]])
-      redirect_to employees_path
+      redirect_to employees_path, notice: "you have successfully created an employee"
     else
+      flash.now[:alert] = [@employee.errors.full_messages].join(", ")
       render :new, status: :unprocessable_entity
     end
   end
@@ -24,37 +24,34 @@ class EmployeesController < ApplicationController
 
   def update
     if @employee.update(employee_params)
-      @employee.update(hobbies: [["music", params[:hobbies][:music]], ["writing", params[:hobbies][:writing]], ["singing", params[:hobbies][:singing]]])
-      redirect_to employees_path
+      redirect_to employees_path, notice: "you have successfully updated the employee"
     else
+      flash.now[:alert] = [@employee.errors.full_messages].join(", ")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @employee.destroy
-      redirect_to employees_path, status: :see_other, notice: "you have successfully deleted the employee"
+      flash[:notice] = "you have successfully deleted the employee"
     else
-      redirect_to employees_path, status: :unprocessable_entity, alert: "The delete action didn't work.."
+      flash[:alert] = [@employee.errors.full_messages].join(", ")
     end
+    redirect_to employees_path
   end
 
   def search
-    if params[:commit] == "Search"
-      @employees = Employee.where(employee_name: params[:employee_name].strip)
-    else
-      @employees = Employee.all
-    end
+    @employees = params[:commit] == "Search" ? Employee.where('employee_name LIKE ?', "%#{params[:employee_name].strip}%") : Employee.all
     render :index
   end
 
   private
 
-  def get_employee
-    @employee = Employee.find(params[:id])
-  end
+    def get_employee
+      @employee = Employee.find(params[:id])
+    end
 
-  def employee_params
-    params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :hobbies, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road])
-  end
+    def employee_params
+      params.require(:employee).permit(:employee_name, :email, :password, :birth_date, :gender, :mobile_number, :document, addresses_attributes: [:id, :house_name, :street_name, :road], hobbies: [])
+    end
 end

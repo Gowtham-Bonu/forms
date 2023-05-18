@@ -1,35 +1,35 @@
 <%= form_with model: employee do |form| %>
-<div class="card container" >
-  <div class="card-body" >
-     <div class="mb-3" >
+  <div class="card container" >
+    <div class="card-body" >
+      <div class="mb-3" >
         <%= form.label :employee_name, {class: "form-label"} %><br>
         <%= form.text_field :employee_name, {class: "form-control", placeholder: "Name"}  %>
         <% @employee.errors.full_messages_for(:employee_name).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
+      </div>
+      <div class="mb-3" >
         <%= form.label :email, {class: "form-label"} %><br>
         <%= form.email_field :email, {class: "form-control", placeholder: "Email"}  %>
         <% @employee.errors.full_messages_for(:email).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
+      </div>
+      <div class="mb-3" >
         <%= form.label :password, {class: "form-label"} %><br>
         <%= form.password_field :password, {class: "form-control", placeholder: "Password"} %>
         <% @employee.errors.full_messages_for(:password).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
+      </div>
+      <div class="mb-3" >
         <%= form.label :birth_date, {class: "form-label"} %><br>
         <%= form.date_field :birth_date, {class: "form-control"} %>
         <% @employee.errors.full_messages_for(:birth_date).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
+      </div>
+      <div class="mb-3" >
         <%= form.radio_button :gender, "male" %>
         <%= form.label :gender_male, {class: "form-label"} %><br>
         <%= form.radio_button :gender, "female" %>
@@ -37,51 +37,43 @@
         <% @employee.errors.full_messages_for(:gender).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
-      Hobbies:
-        <%= check_box("hobbies", "music") %>
-        <%= form.label :hobbies_music, {class: "form-label"} %><br>
-        <%= check_box("hobbies", "writing") %>
-        <%= form.label :hobbies_writing, {class: "form-label"} %><br>
-        <%= check_box("hobbies", "singing") %>
-        <%= form.label :hobbies_singing, {class: "form-label"} %><br>
-        <% @employee.errors.full_messages_for(:birth_date).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-     </div>
-     <div class="mb-3" >
+      </div>
+        <div>
+          Hobbies:<br>
+          <%= form.collection_check_boxes :hobbies, Hobby.order(:name), :id, :name %>
+      </div>
+      <div class="mb-3" >
         <%= form.label :mobile_number, {class: "form-label"} %><br>
         <%= form.number_field :mobile_number, {class: "form-control"}  %>
         <% @employee.errors.full_messages_for(:mobile_number).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     <div class="mb-3" >
-        <%= form.file_field :document, {class: "form-control"} %><br>
+      </div>
+      <div class="mb-3" >
         <%= form.label :document, {class: "form-label"}  %>
-        <% @employee.errors.full_messages_for(:mobile_number).each do |message| %>
+        <%= form.file_field :document, {class: "form-control"} %><br>
+        <% @employee.errors.full_messages_for(:document).each do |message| %>
           <div><%= message %></div>
         <% end %>
-     </div>
-     Addresses:
+      </div>
+      Addresses:
       <ul>
-         <%= form.fields_for :addresses do |addresses_form| %>
-            <li>
+        <%= form.fields_for :addresses do |addresses_form| %>
+          <li>
             <%= addresses_form.label :house_name %>
-            <%= addresses_form.text_field :house_name %>
+            <%= addresses_form.text_area :house_name %>
 
             <%= addresses_form.label :street_name %>
-            <%= addresses_form.text_field :street_name %>
+            <%= addresses_form.text_area :street_name %>
 
             <%= addresses_form.label :road %>
-            <%= addresses_form.text_field :road %>
-            </li>
-         <% end %>
+            <%= addresses_form.text_area :road %>
+          </li>
+        <% end %>
       </ul>
       <div>
-         <%= form.submit %>
+        <%= form.submit %>
       </div>
-   </div>
-</div>
+    </div>
+  </div>
 <% end %>
